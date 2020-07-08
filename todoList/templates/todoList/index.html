@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To Do List</title>    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- BOOTSTRAP CDN -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons">
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css" integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX" crossorigin="anonymous"><link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+
+    <script src="https://unpkg.com/popper.js@1.12.6/dist/umd/popper.js" integrity="sha384-fA23ZRQ3G/J53mElWqVJEGJzU0sTs+SvzG8fXVWP+kJQ1lwFAOkcUOysnlKJC33U" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js" integrity="sha384-CauSuKpEqAFajSpkdjv3z9t8E7RlpJ1UP0lKM/+NdtSarroVKu069AlsRPKkFBz9" crossorigin="anonymous"></script>
+</head>
+<body>
+    <section class="container">
+        <div class="jumbotron text-center">
+            <h2 class="text-dark">To Do List</h2>
+            <h5 class="text-secondary">CURD Operation</h5>
+        </div>
+        <div class="d-flex flex-column">
+            <h3>Add Notes</h3>
+            <div>
+                <div class="d-flex flex-row" id="inputNote">
+                    <div class="col-10">
+                        <textarea class="form-control bg-light" type="text" id="inputValue" placeholder="Start typing"></textarea>
+                    </div>
+                    <div class="container">
+                        <button class="btn btn-success" onclick="addNote()">Add</button>
+                        <button class="btn btn-danger" onclick="resetNote()">Reset</button>
+                    </div>
+                </div>
+                <div class="d-flex flex-column pt-3" id="listDiv">
+                    <div class="d-flex flex-row justify-content-between">
+                        <div class="d-flex flex-row">
+                            <h5 class="text-secondary" id="allListTotal">Total <span class="text-dark" id="allListTotalNumber">{{ listNotes|length }}</span></h5>
+                            <h5 class="text-secondary d-none" id="starListTotal">Total <span class="text-dark" id="starListTotalNumber">{{ starListNotes|length }}</span></h5>
+                            <h5 class="text-secondary d-none" id="notStarListTotal">Total <span class="text-dark" id="notStarListTotalNumber">{{ notStarListNotes|length }}</span></h5>
+                            <button class="btn btn-warning mx-3" id="allNotesButton">All Notes</button>
+                            <button class="btn btn-warning mx-3" id="starNotesButton">Marked Notes</button>
+                            <button class="btn btn-warning mx-3" id="notStarNotesButton">Unmarked Notes</button>
+                        </div>
+                        <div>
+                            <h5 class="text-secondary">Showing <span class="text-dark">New - Old</span></h5>
+                        </div>
+                    </div>
+
+                    <!-- All Notes List -->
+                    <div id="allNotesDiv">
+                        {% for each in listNotes reversed %}
+                        <div class="d-flex flex-row bg-light px-3 my-2" style="border-left: 5px solid rgba(0, 0, 0, 0.479);">
+                            <div style="border-right: 3px solid white;" class="pr-3 py-3 d-flex flex-column justify-content-around">
+                                <span class="text-center">{{each.noteCreationTime}}</span>
+                                <span class="text-center">{{each.noteCreationDate}}</span>
+                                {% if each.noteStar is False %}
+                                    <button class="ri-star-line ri-lg btn" onclick="markStar(this)" value="{{each.id}}"></button>
+                                {% else %}
+                                    <button class="ri-star-fill ri-lg btn" onclick="removeStar(this)" value="{{each.id}}"></button>
+                                {% endif %}
+                                <button class="ri-mail-volume-line ri-lg btn" onclick="removeStar(this)" value="{{each.id}}"></button>
+                            </div>
+                            <div class="p-3 col-11">
+                                <div id="textareaDiv">
+                                    <textarea style="min-height: 60px !important;"  class="col-12 form-control" id="fromAllUpdateNote{{each.id}}">{{each.noteValue}}</textarea>
+                                </div>
+                                <div class="d-flex flex-row justify-content-between pt-2">
+                                    <div>
+                                        <button class="btn btn-secondary">Bold</button>
+                                        <button class="btn btn-secondary">Italic</button>
+                                        <button class="btn btn-secondary">Underline</button>
+                                        <button class="btn btn-secondary">Text Colour</button>
+                                        <button class="btn btn-secondary">Backgound Colour</button>
+                                    </div>
+                                    <div>
+                                        <button class="btn btn-success" onclick="noteUpdate1(this)" value="{{each.id}}">Update</button>
+                                        <button class="btn btn-danger" onclick="noteDelete(this)" value="{{each.id}}">Delete</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                    <!-- Star Notes View List -->
+                    <div id="starNotesDiv" class="d-none">
+                        {% for star in starListNotes reversed %}
+                        <div class="d-flex flex-row bg-light px-3 my-2" style="border-left: 5px solid rgba(0, 0, 0, 0.479);">
+                            <div style="border-right: 3px solid white;" class="pr-3 py-3 d-flex flex-column justify-content-around">
+                                <span class="text-center">{{star.noteCreationTime}}</span>
+                                <span class="text-center">{{star.noteCreationDate}}</span>
+                                {% if star.noteStar is False %}
+                                    <button class="ri-star-line ri-lg btn" onclick="markStar(this)" value="{{star.id}}"></button>
+                                {% else %}
+                                    <button class="ri-star-fill ri-lg btn" onclick="removeStar(this)" value="{{star.id}}"></button>
+                                {% endif %}
+                                <button class="ri-mail-volume-line ri-lg btn" onclick="removeStar(this)" value="{{each.id}}"></button>
+                            </div>
+                            <div class="p-3 col-11">
+                                <div id="textareaDiv">
+                                    <textarea style="min-height: 60px !important;"  class="col-12 form-control" id="fromStarUpdateNote{{star.id}}">{{star.noteValue}}</textarea>
+                                </div>
+                                <div class="d-flex flex-row justify-content-between pt-2">
+                                    <div>
+                                        <button class="btn btn-secondary">Bold</button>
+                                        <button class="btn btn-secondary">Italic</button>
+                                        <button class="btn btn-secondary">Underline</button>
+                                        <button class="btn btn-secondary">Text Colour</button>
+                                        <button class="btn btn-secondary">Backgound Colour</button>
+                                    </div>
+                                    <div>
+                                        <button class="btn btn-success" onclick="noteUpdate2(this)" value="{{star.id}}">Update</button>
+                                        <button class="btn btn-danger" onclick="noteDelete(this)" value="{{star.id}}">Delete</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                    <!-- notStar Notes View List -->
+                    <div id="notStarNotesDiv" class="d-none">
+                        {% for notstar in notStarListNotes reversed %}
+                        <div class="d-flex flex-row bg-light px-3 my-2" style="border-left: 5px solid rgba(0, 0, 0, 0.479);">
+                            <div style="border-right: 3px solid white;" class="pr-3 py-3 d-flex flex-column justify-content-around">
+                                <span class="text-center">{{notstar.noteCreationTime}}</span>
+                                <span class="text-center">{{notstar.noteCreationDate}}</span>
+                                {% if notstar.noteStar is False %}
+                                    <button class="ri-star-line ri-lg btn" onclick="markStar(this)" value="{{notstar.id}}"></button>
+                                {% else %}
+                                    <button class="ri-star-fill ri-lg btn" onclick="removeStar(this)" value="{{notstar.id}}"></button>
+                                {% endif %}
+                                <button class="ri-mail-volume-line ri-lg btn" onclick="removeStar(this)" value="{{each.id}}"></button>
+                            </div>
+                            <div class="p-3 col-11">
+                                <div id="textareaDiv">
+                                    <textarea style="min-height: 60px !important;" class="col-12 form-control" id="fromNonStarUpdateNote{{notstar.id}}">{{notstar.noteValue}}</textarea>
+                                </div>
+                                <div class="d-flex flex-row justify-content-between pt-2">
+                                    <div>
+                                        <button class="btn btn-secondary">Bold</button>
+                                        <button class="btn btn-secondary">Italic</button>
+                                        <button class="btn btn-secondary">Underline</button>
+                                        <button class="btn btn-secondary">Text Colour</button>
+                                        <button class="btn btn-secondary">Backgound Colour</button>
+                                    </div>
+                                    <div>
+                                        <button class="btn btn-success" onclick="noteUpdate3(this)" value="{{notstar.id}}">Update</button>
+                                        <button class="btn btn-danger" onclick="noteDelete(this)" value="{{notstar.id}}">Delete</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+<script>
+    // Notes Filters Buttons
+    // Star Notes View Button
+    $("#allNotesButton").click(function(){
+        $("#allListTotal").removeClass('d-none');
+        $("#starListTotal").addClass('d-none');
+        $("#notStarListTotal").addClass('d-none');
+        $("#allNotesDiv").removeClass('d-none');
+        $("#starNotesDiv").addClass('d-none');
+        $("#notStarNotesDiv").addClass('d-none');
+    });
+    // Star Notes View Button
+    $("#starNotesButton").click(function(){
+        $("#allListTotal").addClass('d-none');
+        $("#starListTotal").removeClass('d-none');
+        $("#notStarListTotal").addClass('d-none');
+        $("#allNotesDiv").addClass('d-none');
+        $("#starNotesDiv").removeClass('d-none');
+        $("#notStarNotesDiv").addClass('d-none');
+    });
+    // Star Notes View Button
+    $("#notStarNotesButton").click(function(){
+        $("#allListTotal").addClass('d-none');
+        $("#starListTotal").addClass('d-none');
+        $("#notStarListTotal").removeClass('d-none');
+        $("#allNotesDiv").addClass('d-none');
+        $("#starNotesDiv").addClass('d-none');
+        $("#notStarNotesDiv").removeClass('d-none');
+    });
+
+    // Reset Note
+    function resetNote(){
+        $('input[name="noteValue"]').val('');
+        $('#inputNote').load(' #inputNote > *');
+    }
+
+    // Action Buttons
+    // Mark Star Note
+    function markStar(e){
+        $.ajax({
+          type:'POST',
+          url:'{% url "todoList:markStar" %}',
+          data:{
+              noteID: e.value,
+              csrfmiddlewaretoken: '{{ csrf_token }}'
+          },
+          success: function(data){
+            $("#allListTotalNumber").load(' #allListTotalNumber');
+            $("#starListTotalNumber").load(' #starListTotalNumber');
+            $("#notStarListTotalNumber").load(' #notStarListTotalNumber');
+            $('#allNotesDiv').load(' #allNotesDiv > *');
+            $('#starNotesDiv').load(' #starNotesDiv > *');
+            $('#notStarNotesDiv').load(' #notStarNotesDiv > *');
+          },
+        });
+    }
+    // Remove Star Note
+    function removeStar(e){
+        $.ajax({
+          type:'POST',
+          url:'{% url "todoList:removeStar" %}',
+          data:{
+              noteID: e.value,
+              csrfmiddlewaretoken: '{{ csrf_token }}'
+          },
+          success: function(data){
+            $("#allListTotalNumber").load(' #allListTotalNumber');
+            $("#starListTotalNumber").load(' #starListTotalNumber');
+            $("#notStarListTotalNumber").load(' #notStarListTotalNumber');
+            $('#allNotesDiv').load(' #allNotesDiv > *');
+            $('#starNotesDiv').load(' #starNotesDiv > *');
+            $('#notStarNotesDiv').load(' #notStarNotesDiv > *');
+          },
+        });
+    }
+
+    // Add Note
+    function addNote(){
+        $.ajax({
+          type:'POST',
+          url:'{% url "todoList:noteAdd" %}',
+          data:{
+              noteValue: $('#inputValue').val(),
+              csrfmiddlewaretoken: '{{ csrf_token }}'
+          },
+          success: function(data){
+            $('#allNotesDiv').load(' #allNotesDiv > *');
+            $('#starNotesDiv').load(' #starNotesDiv > *');
+            $('#notStarNotesDiv').load(' #notStarNotesDiv > *');
+            $('input[name="noteValue"]').val('');
+            $('#inputNote').load(' #inputNote > *');
+          },
+        });
+    }
+
+    // Update Note
+    function noteUpdate1(e){
+        $.ajax({
+          type:'POST',
+          url:'{% url "todoList:noteUpdate" %}',
+          data:{
+              noteValue: $('#fromAllUpdateNote'+e.value).val(),
+              noteID: e.value,
+              csrfmiddlewaretoken: '{{ csrf_token }}'
+          },
+          success: function(data){
+            $('#allNotesDiv').load(' #allNotesDiv > *');
+            $('#starNotesDiv').load(' #starNotesDiv > *');
+            $('#notStarNotesDiv').load(' #notStarNotesDiv > *');
+          },
+        });
+    }
+    function noteUpdate2(e){
+        $.ajax({
+          type:'POST',
+          url:'{% url "todoList:noteUpdate" %}',
+          data:{
+              noteValue: $('#fromStarUpdateNote'+e.value).val(),
+              noteID: e.value,
+              csrfmiddlewaretoken: '{{ csrf_token }}'
+          },
+          success: function(data){
+            $('#allNotesDiv').load(' #allNotesDiv > *');
+            $('#starNotesDiv').load(' #starNotesDiv > *');
+            $('#notStarNotesDiv').load(' #notStarNotesDiv > *');
+          },
+        });
+    }
+    function noteUpdate3(e){
+        $.ajax({
+          type:'POST',
+          url:'{% url "todoList:noteUpdate" %}',
+          data:{
+              noteValue: $('#fromNonStarUpdateNote'+e.value).val(),
+              noteID: e.value,
+              csrfmiddlewaretoken: '{{ csrf_token }}'
+          },
+          success: function(data){
+            $('#allNotesDiv').load(' #allNotesDiv > *');
+            $('#starNotesDiv').load(' #starNotesDiv > *');
+            $('#notStarNotesDiv').load(' #notStarNotesDiv > *');
+          },
+        });
+    }
+
+    // Delete Note
+    function noteDelete(e){
+        $.ajax({
+          type:'POST',
+          url:'{% url "todoList:noteDelete" %}',
+          data:{
+              noteID: e.value,
+              csrfmiddlewaretoken: '{{ csrf_token }}'
+          },
+          success: function(data){
+            $('#allNotesDiv').load(' #allNotesDiv > *');
+            $('#starNotesDiv').load(' #starNotesDiv > *');
+            $('#notStarNotesDiv').load(' #notStarNotesDiv > *');
+          },
+        });
+    }
+
+    jQuery.fn.extend({
+      autoHeight: function () {
+        function autoHeight_(element) {
+          return jQuery(element).css({
+            'height': 'auto',
+            'overflow-y': 'hidden'
+          }).height(element.scrollHeight);
+        }
+        return this.each(function () {
+          autoHeight_(this).on('input', function () {
+            autoHeight_(this);
+          });
+        });
+      }
+    });
+    $('#inputValue').autoHeight();
+    $('#textareaDiv>textarea').autoHeight();
+</script>
+</html>
