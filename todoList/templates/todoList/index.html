@@ -66,11 +66,31 @@
                                 </div>
                                 <div class="d-flex flex-row justify-content-between pt-2">
                                     <div>
-                                        <button class="btn btn-secondary">Bold</button>
-                                        <button class="btn btn-secondary">Italic</button>
-                                        <button class="btn btn-secondary">Underline</button>
-                                        <button class="btn btn-secondary">Text Colour</button>
-                                        <button class="btn btn-secondary">Backgound Colour</button>
+                                        {% if each.noteBold is True %}
+                                            <button class="ri-bold ri-lg btn bg-secondary text-white"></button>
+                                        {% endif %}{% if each.noteBold is False %}
+                                            <button class="ri-bold ri-lg btn"></button>
+                                        {% endif %}{% if each.noteItalic is True %}
+                                            <button class="ri-italic ri-lg btn bg-secondary text-white"></button>
+                                        {% endif %}{% if each.noteItalic is False %}
+                                            <button class="ri-italic ri-lg btn"></button>
+                                        {% endif %}{% if each.noteUnderline is True %}
+                                            <button class="ri-underline ri-lg btn bg-secondary text-white"></button>
+                                        {% endif %}{% if each.noteUnderline is False %}
+                                            <button class="ri-underline ri-lg btn"></button>
+                                        {% endif %}{% if each.noteStrikeThrough is True %}
+                                            <button class="ri-strikethrough ri-lg btn bg-secondary text-white"></button>
+                                        {% endif %}{% if each.noteStrikeThrough is False %}
+                                            <button class="ri-strikethrough ri-lg btn"></button>
+                                        {% endif %}{% if each.noteTextColor is Null %}
+                                            <button class="ri-brush-line ri-lg btn"></button>
+                                        {% endif %}{% if each.noteTextColor is not Null %}
+                                            <button class="ri-brush-line ri-lg btn bg-secondary text-white"></button>
+                                        {% endif %}{% if each.noteBackgroundColor is Null %}
+                                            <button class="ri-paint-brush-line ri-lg btn"></button>
+                                        {% endif %}{% if each.noteBackgroundColor is not Null %}
+                                            <button class="ri-paint-brush-line ri-lg btn bg-secondary text-white"></button>
+                                        {% endif %}
                                     </div>
                                     <div>
                                         <button class="btn btn-success" onclick="noteUpdate1(this)" value="{{each.id}}">Update</button>
@@ -102,11 +122,31 @@
                                 </div>
                                 <div class="d-flex flex-row justify-content-between pt-2">
                                     <div>
-                                        <button class="btn btn-secondary">Bold</button>
-                                        <button class="btn btn-secondary">Italic</button>
-                                        <button class="btn btn-secondary">Underline</button>
-                                        <button class="btn btn-secondary">Text Colour</button>
-                                        <button class="btn btn-secondary">Backgound Colour</button>
+                                        {% if star.noteBold is True %}
+                                            <button class="ri-bold ri-lg btn bg-secondary text-white"></button>
+                                        {% endif %}{% if star.noteBold is False %}
+                                            <button class="ri-bold ri-lg btn"></button>
+                                        {% endif %}{% if star.noteItalic is True %}
+                                            <button class="ri-italic ri-lg btn bg-secondary text-white"></button>
+                                        {% endif %}{% if star.noteItalic is False %}
+                                            <button class="ri-italic ri-lg btn"></button>
+                                        {% endif %}{% if star.noteUnderline is True %}
+                                            <button class="ri-underline ri-lg btn bg-secondary text-white"></button>
+                                        {% endif %}{% if star.noteUnderline is False %}
+                                            <button class="ri-underline ri-lg btn"></button>
+                                        {% endif %}{% if star.noteStrikeThrough is True %}
+                                            <button class="ri-strikethrough ri-lg btn bg-secondary text-white"></button>
+                                        {% endif %}{% if star.noteStrikeThrough is False %}
+                                            <button class="ri-strikethrough ri-lg btn"></button>
+                                        {% endif %}{% if star.noteTextColor is Null %}
+                                            <button class="ri-brush-line ri-lg btn"></button>
+                                        {% endif %}{% if star.noteTextColor is not Null %}
+                                            <button class="ri-brush-line ri-lg btn bg-secondary text-white"></button>
+                                        {% endif %}{% if star.noteBackgroundColor is Null %}
+                                            <button class="ri-paint-brush-line ri-lg btn"></button>
+                                        {% endif %}{% if star.noteBackgroundColor is not Null %}
+                                            <button class="ri-paint-brush-line ri-lg btn bg-secondary text-white"></button>
+                                        {% endif %}
                                     </div>
                                     <div>
                                         <button class="btn btn-success" onclick="noteUpdate2(this)" value="{{star.id}}">Update</button>
@@ -138,11 +178,31 @@
                                 </div>
                                 <div class="d-flex flex-row justify-content-between pt-2">
                                     <div>
-                                        <button class="btn btn-secondary">Bold</button>
-                                        <button class="btn btn-secondary">Italic</button>
-                                        <button class="btn btn-secondary">Underline</button>
-                                        <button class="btn btn-secondary">Text Colour</button>
-                                        <button class="btn btn-secondary">Backgound Colour</button>
+                                        {% if notstar.noteBold is True %}
+                                            <button class="ri-bold ri-lg btn bg-secondary text-white"></button>
+                                        {% endif %}{% if notstar.noteBold is False %}
+                                            <button class="ri-bold ri-lg btn"></button>
+                                        {% endif %}{% if notstar.noteItalic is True %}
+                                            <button class="ri-italic ri-lg btn bg-secondary text-white"></button>
+                                        {% endif %}{% if notstar.noteItalic is False %}
+                                            <button class="ri-italic ri-lg btn"></button>
+                                        {% endif %}{% if notstar.noteUnderline is True %}
+                                            <button class="ri-underline ri-lg btn bg-secondary text-white"></button>
+                                        {% endif %}{% if notstar.noteUnderline is False %}
+                                            <button class="ri-underline ri-lg btn"></button>
+                                        {% endif %}{% if notstar.noteStrikeThrough is True %}
+                                            <button class="ri-strikethrough ri-lg btn bg-secondary text-white"></button>
+                                        {% endif %}{% if notstar.noteStrikeThrough is False %}
+                                            <button class="ri-strikethrough ri-lg btn"></button>
+                                        {% endif %}{% if notstar.noteTextColor is Null %}
+                                            <button class="ri-brush-line ri-lg btn"></button>
+                                        {% endif %}{% if notstar.noteTextColor is not Null %}
+                                            <button class="ri-brush-line ri-lg btn bg-secondary text-white"></button>
+                                        {% endif %}{% if notstar.noteBackgroundColor is Null %}
+                                            <button class="ri-paint-brush-line ri-lg btn"></button>
+                                        {% endif %}{% if notstar.noteBackgroundColor is not Null %}
+                                            <button class="ri-paint-brush-line ri-lg btn bg-secondary text-white"></button>
+                                        {% endif %}
                                     </div>
                                     <div>
                                         <button class="btn btn-success" onclick="noteUpdate3(this)" value="{{notstar.id}}">Update</button>

@@ -8,6 +8,7 @@ class noteModel(models.Model):
     noteBold = models.BooleanField(default=False)
     noteItalic = models.BooleanField(default=False)
     noteUnderline = models.BooleanField(default=False)
+    noteStrikeThrough = models.BooleanField(default=False)
     noteTextColor = models.CharField(max_length=200,blank=True,null=True)
     noteBackgroundColor = models.CharField(max_length=200,blank=True,null=True)
     noteCreationDate = models.CharField(max_length=200,blank=True,null=True)
