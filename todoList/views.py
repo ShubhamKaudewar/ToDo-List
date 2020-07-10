@@ -69,3 +69,80 @@ def removeStar(request):
             noteStar = False
         )
         return HttpResponse('')
+
+# Common Buttons
+def enableBold(request):
+    if request.method == 'POST':
+        noteID = request.POST['noteID']
+        print(noteID)
+        noteModel.objects.filter(id=noteID).update(
+            noteBold = True
+        )
+        return HttpResponse('')
+def disableBold(request):
+    if request.method == 'POST':
+        noteID = request.POST['noteID']
+        noteModel.objects.filter(id=noteID).update(
+            noteBold = False
+        )
+        return HttpResponse('')
+def enableItalic(request):
+    if request.method == 'POST':
+        noteID = request.POST['noteID']
+        print(noteID)
+        noteModel.objects.filter(id=noteID).update(
+            noteItalic = True
+        )
+        return HttpResponse('')
+def disableItalic(request):
+    if request.method == 'POST':
+        noteID = request.POST['noteID']
+        noteModel.objects.filter(id=noteID).update(
+            noteItalic = False
+        )
+        return HttpResponse('')
+def enableUnderline(request):
+    if request.method == 'POST':
+        noteID = request.POST['noteID']
+        print(noteID)
+        noteModel.objects.filter(id=noteID).update(
+            noteUnderline = True
+        )
+        return HttpResponse('')
+def disableUnderline(request):
+    if request.method == 'POST':
+        noteID = request.POST['noteID']
+        noteModel.objects.filter(id=noteID).update(
+            noteUnderline = False
+        )
+        return HttpResponse('')
+def enableStrikeThrough(request):
+    if request.method == 'POST':
+        noteID = request.POST['noteID']
+        noteModel.objects.filter(id=noteID).update(
+            noteStrikeThrough = True
+        )
+        return HttpResponse('')
+def disableStrikeThrough(request):
+    if request.method == 'POST':
+        noteID = request.POST['noteID']
+        noteModel.objects.filter(id=noteID).update(
+            noteStrikeThrough = False
+        )
+        return HttpResponse('')
+def enableBackgroundColor(request):
+    if request.method == 'POST':
+        noteID = request.POST['noteID']
+        print(noteID)
+        # noteModel.objects.filter(id=noteID).update(
+        #     noteStrikeThrough = True
+        # )
+        return HttpResponse('')
+def disableBackgroundColor(request):
+    if request.method == 'POST':
+        noteID = request.POST['noteID']
+        print(noteID)
+        # noteModel.objects.filter(id=noteID).update(
+        #     noteStrikeThrough = False
+        # )
+        return HttpResponse('')
