@@ -14,9 +14,6 @@
     <script src="https://unpkg.com/popper.js@1.12.6/dist/umd/popper.js" integrity="sha384-fA23ZRQ3G/J53mElWqVJEGJzU0sTs+SvzG8fXVWP+kJQ1lwFAOkcUOysnlKJC33U" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js" integrity="sha384-CauSuKpEqAFajSpkdjv3z9t8E7RlpJ1UP0lKM/+NdtSarroVKu069AlsRPKkFBz9" crossorigin="anonymous"></script>
 
-    <!-- Color Picker CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/spectrum-colorpicker2@2.0.0/dist/spectrum.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/spectrum-colorpicker2@2.0.0/dist/spectrum.min.css">
 </head>
 <body>
     <section class="container">
@@ -55,7 +52,12 @@
                     <div id="allNotesDiv">
                         {% for each in listNotes reversed %}
                         <div class="d-flex flex-sm-row flex-column bg-light px-3 my-2" style="border-left: 5px solid rgba(0, 0, 0, 0.479);">
-                            <div style="border-right: 3px solid white;" class="pr-3 py-3 d-flex flex-row flex-md-column flex-lg-column justify-content-around">
+                            <div style="
+                                background-color: {{each.noteBackgroundColor}};
+                                border-right: 3px solid white;
+                                " class="pr-3 py-3 d-flex flex-row flex-md-column flex-lg-column justify-content-around"
+                                data-allDivOne="{{each.id}}"
+                                >
                                 <span class="text-center">{{each.noteCreationTime}}</span>
                                 <span class="text-center">{{each.noteCreationDate}}</span>
                                 {% if each.noteStar is False %}
@@ -65,7 +67,9 @@
                                 {% endif %}
                                 <button class="ri-mail-volume-line ri-lg btn" onclick="removeStar(this)" value="{{each.id}}"></button>
                             </div>
-                            <div class="p-3 col-11">
+                            <div 
+                                style="background-color: {{each.noteBackgroundColor}};"
+                                class="p-3 col-11" data-allDivTwo="{{each.id}}">
                                 <div id="textareaDiv1">
                                     <textarea 
                                         style="
@@ -103,15 +107,16 @@
                                             <button class="ri-strikethrough ri-lg btn bg-secondary text-white" onclick="disableStrikeThrough(this)" value="{{each.id}}"></button>
                                         {% endif %}{% if each.noteStrikeThrough is False %}
                                             <button class="ri-strikethrough ri-lg btn" onclick="enableStrikeThrough(this)" value="{{each.id}}"></button>
-                                        {% endif %}{% if each.noteTextColor is Null %}
+                                        {% endif %}{% if each.noteTextColor == 'black' %}
                                             <button class="ri-brush-line ri-lg btn" onclick="enableTextColor(this)" value="{{each.id}}"></button>
-                                        {% endif %}{% if each.noteTextColor is not Null %}
+                                        {% endif %}{% if each.noteTextColor != 'black' %}
                                             <button class="ri-brush-line ri-lg btn bg-secondary text-white" onclick="disableTextColor(this)" value="{{each.id}}"></button>
-                                        {% endif %}{% if each.noteBackgroundColor is Null %}
-                                            <button class="ri-paint-brush-line ri-lg btn" onclick="enableBackgroundColor(this)" data-id="{{each.id}}" id="color-picker"></button>
-                                        {% endif %}{% if each.noteBackgroundColor is not Null %}
-                                            <button class="ri-paint-brush-line ri-lg btn bg-secondary text-white" onclick="disableBackgroundColor(this)" data-id="{{each.id}}"></button>
+                                        {% endif %}{% if each.noteBackgroundColor == 'transparent' %}
+                                            <input type="color" class="ri-paint-brush-line ri-lg btn" name="bgcolor1" pattern="^#+([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$" data-bgcolor1="{{each.id}}" id="bgcolorpicker1" value="#f5f5f5"></input>
+                                        {% endif %}{% if each.noteBackgroundColor != 'transparent' %}
+                                            <button type="color" class="ri-paint-brush-line ri-lg btn bg-secondary text-white" onclick="disableBackgroundColor(this)" data-id="{{each.id}}"></button>
                                         {% endif %}
+                                        <input type="hidden" pattern="^#+([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$" value="#f5f5f5" id="bghexcolor1"></input>
                                         <button class="ri-sort-asc ri-lg btn" onclick="minimizeTextarea1(this)" value="{{each.id}}" data-min1="{{each.id}}"></button>
                                         <button class="ri-sort-desc ri-lg btn bg-secondary text-white d-none" onclick="maximizeTextarea1(this)" value="{{each.id}}" data-max1="{{each.id}}"></button>
                                     </div>
@@ -129,7 +134,12 @@
                     <div id="starNotesDiv" class="d-none">
                         {% for star in starListNotes reversed %}
                         <div class="d-flex flex-row bg-light px-3 my-2" style="border-left: 5px solid rgba(0, 0, 0, 0.479);">
-                            <div style="border-right: 3px solid white;" class="pr-3 py-3 d-flex flex-column justify-content-around">
+                            <div style="
+                                background-color: {{star.noteBackgroundColor}};
+                                border-right: 3px solid white;
+                                " class="pr-3 py-3 d-flex flex-row flex-md-column flex-lg-column justify-content-around"
+                                data-starDivOne="{{star.id}}"
+                                >
                                 <span class="text-center">{{star.noteCreationTime}}</span>
                                 <span class="text-center">{{star.noteCreationDate}}</span>
                                 {% if star.noteStar is False %}
@@ -139,10 +149,12 @@
                                 {% endif %}
                                 <button class="ri-mail-volume-line ri-lg btn" onclick="removeStar(this)" value="{{star.id}}"></button>
                             </div>
-                            <div class="p-3 col-11">
+                            <div 
+                                style="background-color: {{star.noteBackgroundColor}};"
+                                class="p-3 col-11" data-starDivTwo="{{star.id}}">
                                 <div id="textareaDiv2">
                                     <textarea 
-                                        style="min-height: 60px !important;
+                                        style="
                                         {% if star.noteUnderline is True %}
                                             {% if star.noteStrikeThrough is True %}
                                                 text-decoration: underline line-through;
@@ -177,15 +189,16 @@
                                             <button class="ri-strikethrough ri-lg btn bg-secondary text-white" onclick="disableStrikeThrough(this)" value="{{star.id}}"></button>
                                         {% endif %}{% if star.noteStrikeThrough is False %}
                                             <button class="ri-strikethrough ri-lg btn" onclick="enableStrikeThrough(this)" value="{{star.id}}"></button>
-                                        {% endif %}{% if star.noteTextColor is Null %}
+                                        {% endif %}{% if star.noteTextColor == 'black' %}
                                             <button class="ri-brush-line ri-lg btn" onclick="enableTextColor(this)" value="{{star.id}}"></button>
-                                        {% endif %}{% if star.noteTextColor is not Null %}
+                                        {% endif %}{% if star.noteTextColor != 'black' %}
                                             <button class="ri-brush-line ri-lg btn bg-secondary text-white" onclick="disableTextColor(this)" value="{{star.id}}"></button>
-                                        {% endif %}{% if star.noteBackgroundColor is Null %}
-                                            <button class="ri-paint-brush-line ri-lg btn" onclick="enableBackgroundColor(this)" value="{{star.id}}"></button>
-                                        {% endif %}{% if star.noteBackgroundColor is not Null %}
-                                            <button class="ri-paint-brush-line ri-lg btn bg-secondary text-white" onclick="disableBackgroundColor(this)" value="{{star.id}}"></button>
+                                        {% endif %}{% if star.noteBackgroundColor == 'transparent' %}
+                                            <input type="color" class="ri-paint-brush-line ri-lg btn" name="bgcolor2" pattern="^#+([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$" data-bgcolor2="{{star.id}}" id="bgcolorpicker2" value="#f5f5f5"></input>
+                                        {% endif %}{% if star.noteBackgroundColor != 'transparent' %}
+                                            <button type="color" class="ri-paint-brush-line ri-lg btn bg-secondary text-white" onclick="disableBackgroundColor(this)" data-id="{{star.id}}"></button>
                                         {% endif %}
+                                        <input type="hidden" pattern="^#+([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$" value="#f5f5f5" id="bghexcolor2"></input>
                                         <button class="ri-sort-asc ri-lg btn" onclick="minimizeTextarea2(this)" value="{{star.id}}" data-min1="{{star.id}}"></button>
                                         <button class="ri-sort-desc ri-lg btn bg-secondary text-white d-none" onclick="maximizeTextarea2(this)" value="{{star.id}}" data-max1="{{star.id}}"></button>
                                     </div>
@@ -203,7 +216,12 @@
                     <div id="notStarNotesDiv" class="d-none">
                         {% for notstar in notStarListNotes reversed %}
                         <div class="d-flex flex-row bg-light px-3 my-2" style="border-left: 5px solid rgba(0, 0, 0, 0.479);">
-                            <div style="border-right: 3px solid white;" class="pr-3 py-3 d-flex flex-column justify-content-around">
+                            <div style="
+                                background-color: {{notstar.noteBackgroundColor}};
+                                border-right: 3px solid white;
+                                " class="pr-3 py-3 d-flex flex-row flex-md-column flex-lg-column justify-content-around"
+                                data-notstarDivOne="{{notstar.id}}"
+                                >
                                 <span class="text-center">{{notstar.noteCreationTime}}</span>
                                 <span class="text-center">{{notstar.noteCreationDate}}</span>
                                 {% if notstar.noteStar is False %}
@@ -213,7 +231,9 @@
                                 {% endif %}
                                 <button class="ri-mail-volume-line ri-lg btn" onclick="removeStar(this)" value="{{each.id}}"></button>
                             </div>
-                            <div class="p-3 col-11">
+                            <div 
+                                style="background-color: {{notstar.noteBackgroundColor}};"
+                                class="p-3 col-11" data-notstarDivTwo="{{notstar.id}}">
                                 <div id="textareaDiv3">
                                     <textarea 
                                         style="min-height: 60px !important;
@@ -251,15 +271,16 @@
                                             <button class="ri-strikethrough ri-lg btn bg-secondary text-white" onclick="disableStrikeThrough(this)" value="{{notstar.id}}"></button>
                                         {% endif %}{% if notstar.noteStrikeThrough is False %}
                                             <button class="ri-strikethrough ri-lg btn" onclick="enableStrikeThrough(this)" value="{{notstar.id}}"></button>
-                                        {% endif %}{% if notstar.noteTextColor is Null %}
+                                        {% endif %}{% if notstar.noteTextColor == 'black' %}
                                             <button class="ri-brush-line ri-lg btn" onclick="disableTextColor(this)" value="{{notstar.id}}"></button>
-                                        {% endif %}{% if notstar.noteTextColor is not Null %}
+                                        {% endif %}{% if notstar.noteTextColor != 'black' %}
                                             <button class="ri-brush-line ri-lg btn bg-secondary text-white" onclick="enableTextColor(this)" value="{{notstar.id}}"></button>
-                                        {% endif %}{% if notstar.noteBackgroundColor is Null %}
-                                            <button class="ri-paint-brush-line ri-lg btn" onclick="disableBackgroundColor(this)" value="{{notstar.id}}"></button>
-                                        {% endif %}{% if notstar.noteBackgroundColor is not Null %}
-                                            <button class="ri-paint-brush-line ri-lg btn bg-secondary text-white" onclick="enableBackgroundColor(this)" value="{{notstar.id}}"></button>
+                                        {% endif %}{% if notstar.noteBackgroundColor == 'transparent' %}
+                                            <input type="color" class="ri-paint-brush-line ri-lg btn" name="bgcolor3" pattern="^#+([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$" data-bgcolor3="{{notstar.id}}" id="bgcolorpicker3" value="#f5f5f5"></input>
+                                        {% endif %}{% if notstar.noteBackgroundColor != 'transparent' %}
+                                            <button class="ri-paint-brush-line ri-lg btn bg-secondary text-white" onclick="disableBackgroundColor(this)" data-id="{{notstar.id}}"></button>
                                         {% endif %}
+                                        <input type="hidden" pattern="^#+([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$" value="#f5f5f5" id="bghexcolor3"></input>
                                         <button class="ri-sort-asc ri-lg btn" onclick="minimizeTextarea3(this)" value="{{notstar.id}}" data-min1="{{notstar.id}}"></button>
                                         <button class="ri-sort-desc ri-lg btn bg-secondary text-white d-none" onclick="maximizeTextarea3(this)" value="{{notstar.id}}" data-max1="{{notstar.id}}"></button>
                                     </div>
@@ -485,25 +506,6 @@
           },
         });
     }
-    // Background Colour Enable
-    function enableBackgroundColor(e){
-        alert(e.value);
-        alert(e.getAttribute('data-id'));
-        $.ajax({
-          type:'POST',
-          url:'{% url "todoList:enableBackgroundColor" %}',
-          data:{
-              noteID: e.getAttribute('data-id'),
-              value: e.value,
-              csrfmiddlewaretoken: '{{ csrf_token }}'
-          },
-          success: function(data){
-            $('#allNotesDiv').load(' #allNotesDiv > *');
-            $('#starNotesDiv').load(' #starNotesDiv > *');
-            $('#notStarNotesDiv').load(' #notStarNotesDiv > *');
-          },
-        });
-    }
     // Background Colour Disable
     function disableBackgroundColor(e){
         $.ajax({
@@ -511,7 +513,6 @@
           url:'{% url "todoList:disableBackgroundColor" %}',
           data:{
               noteID: e.getAttribute('data-id'),
-              value: e.value,
               csrfmiddlewaretoken: '{{ csrf_token }}'
           },
           success: function(data){
@@ -561,6 +562,7 @@
           url:'{% url "todoList:noteUpdate" %}',
           data:{
               noteValue: $('#fromAllUpdateNote'+e.value).val(),
+              noteBackgroundColor: $('[data-bgcolor1='+e.value+']').val(),
               noteID: e.value,
               csrfmiddlewaretoken: '{{ csrf_token }}'
           },
@@ -578,6 +580,7 @@
           url:'{% url "todoList:noteUpdate" %}',
           data:{
               noteValue: $('#fromStarUpdateNote'+e.value).val(),
+              noteBackgroundColor: $('[data-bgcolor2='+e.value+']').val(),
               noteID: e.value,
               csrfmiddlewaretoken: '{{ csrf_token }}'
           },
@@ -595,6 +598,7 @@
           url:'{% url "todoList:noteUpdate" %}',
           data:{
               noteValue: $('#fromNotStarUpdateNote'+e.value).val(),
+              noteBackgroundColor: $('[data-bgcolor3='+e.value+']').val(),
               noteID: e.value,
               csrfmiddlewaretoken: '{{ csrf_token }}'
           },
@@ -650,11 +654,42 @@
         $(e).autoHeight();
     };
 
-    $('#color-picker').spectrum({
-        type: "color",
-        showPalette: "false",
-        togglePaletteOnly: "true",
-        showAlpha: "false"
+    //Background Color Pickers
+    //Background Color Picker 1
+    $('input[name="bgcolor1"]').on('change', function() {
+	    $('#bghexcolor1').val(this.value);
+        alert('Please click update to apply changes.');
+        $('[data-allDivOne='+$(this).attr("data-bgcolor1")+']').attr("style", "");
+        $('[data-allDivOne='+$(this).attr("data-bgcolor1")+']').css({"background-color":""+this.value+"","border-right": "3px solid white"});
+        $('[data-allDivTwo='+$(this).attr("data-bgcolor1")+']').attr("style", "");
+        $('[data-allDivTwo='+$(this).attr("data-bgcolor1")+']').css({"background-color":""+this.value+"","border-right": "3px solid white"});
+    });
+    $('#bghexcolor1').on('change', function() {
+      $('#bgcolorpicker1').val(this.value);
+    });
+    //Background Color Picker 2
+    $('input[name="bgcolor2"]').on('change', function() {
+	    $('#bghexcolor2').val(this.value);
+        alert('Please click update to apply changes.');
+        $('[data-starDivOne='+$(this).attr("data-bgcolor2")+']').attr("style", "");
+        $('[data-starDivOne='+$(this).attr("data-bgcolor2")+']').css({"background-color":""+this.value+"","border-right": "3px solid white"});
+        $('[data-starDivTwo='+$(this).attr("data-bgcolor2")+']').attr("style", "");
+        $('[data-starDivTwo='+$(this).attr("data-bgcolor2")+']').css({"background-color":""+this.value+"","border-right": "3px solid white"});
+    });
+    $('#bghexcolor2').on('change', function() {
+      $('#bgcolorpicker2').val(this.value);
+    });
+    //Background Color Picker 3
+    $('input[name="bgcolor3"]').on('change', function() {
+	    $('#bghexcolor3').val(this.value);
+        alert('Please click update to apply changes.');
+        $('[data-notstarDivOne='+$(this).attr("data-bgcolor3")+']').attr("style", "");
+        $('[data-notstarDivOne='+$(this).attr("data-bgcolor3")+']').css({"background-color":""+this.value+"","border-right": "3px solid white"});
+        $('[data-notstarDivTwo='+$(this).attr("data-bgcolor3")+']').attr("style", "");
+        $('[data-notstarDivTwo='+$(this).attr("data-bgcolor3")+']').css({"background-color":""+this.value+"","border-right": "3px solid white"});
+    });
+    $('#bghexcolor3').on('change', function() {
+      $('#bgcolorpicker3').val(this.value);
     });
 </script>
 </html>

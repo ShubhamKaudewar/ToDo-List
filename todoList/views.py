@@ -43,8 +43,10 @@ def noteUpdate(request):
     if request.method == 'POST':
         noteID = request.POST['noteID']
         noteValue = request.POST['noteValue']
+        noteBackgroundColor = request.POST['noteBackgroundColor']
         noteModel.objects.filter(id=noteID).update(
-            noteValue = noteValue
+            noteValue = noteValue,
+            noteBackgroundColor = noteBackgroundColor,
         )
         return HttpResponse('')
 
@@ -74,7 +76,6 @@ def removeStar(request):
 def enableBold(request):
     if request.method == 'POST':
         noteID = request.POST['noteID']
-        print(noteID)
         noteModel.objects.filter(id=noteID).update(
             noteBold = True
         )
@@ -89,7 +90,6 @@ def disableBold(request):
 def enableItalic(request):
     if request.method == 'POST':
         noteID = request.POST['noteID']
-        print(noteID)
         noteModel.objects.filter(id=noteID).update(
             noteItalic = True
         )
@@ -104,7 +104,6 @@ def disableItalic(request):
 def enableUnderline(request):
     if request.method == 'POST':
         noteID = request.POST['noteID']
-        print(noteID)
         noteModel.objects.filter(id=noteID).update(
             noteUnderline = True
         )
@@ -130,19 +129,10 @@ def disableStrikeThrough(request):
             noteStrikeThrough = False
         )
         return HttpResponse('')
-def enableBackgroundColor(request):
-    if request.method == 'POST':
-        noteID = request.POST['noteID']
-        print(noteID)
-        # noteModel.objects.filter(id=noteID).update(
-        #     noteStrikeThrough = True
-        # )
-        return HttpResponse('')
 def disableBackgroundColor(request):
     if request.method == 'POST':
         noteID = request.POST['noteID']
-        print(noteID)
-        # noteModel.objects.filter(id=noteID).update(
-        #     noteStrikeThrough = False
-        # )
+        noteModel.objects.filter(id=noteID).update(
+            noteBackgroundColor = 'transparent'
+        )
         return HttpResponse('')

@@ -19,6 +19,5 @@ urlpatterns = [
     path('disableUnderline',disableUnderline,name="disableUnderline"),
     path('enableStrikeThrough',enableStrikeThrough,name="enableStrikeThrough"),
     path('disableStrikeThrough',disableStrikeThrough,name="disableStrikeThrough"),
-    path('enableBackgroundColor',enableBackgroundColor,name="enableBackgroundColor"),
     path('disableBackgroundColor',disableBackgroundColor,name="disableBackgroundColor"),
 ]
