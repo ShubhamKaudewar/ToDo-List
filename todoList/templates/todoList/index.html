@@ -27,18 +27,18 @@
         <div class="d-flex flex-column">
             <h3>Add Notes</h3>
             <div>
-                <div class="d-flex flex-row" id="inputNote">
-                    <div class="col-10">
+                <div class="d-flex flex-column flex-md-row" id="inputNote">
+                    <div class="col-12 col-md-10">
                         <textarea class="form-control bg-light" type="text" id="inputValue" placeholder="Start typing"></textarea>
                     </div>
-                    <div class="container">
+                    <div class="d-flex flex-row justify-content-around  justify-content-md-start">
                         <button class="btn btn-success" onclick="addNote()">Add</button>
                         <button class="btn btn-danger" onclick="resetNote()">Reset</button>
                     </div>
                 </div>
                 <div class="d-flex flex-column pt-3" id="listDiv">
-                    <div class="d-flex flex-row justify-content-between">
-                        <div class="d-flex flex-row">
+                    <div class="d-flex text-center flex-column flex-md-row flex-lg-row  justify-content-between">
+                        <div class="d-flex flex-column flex-md-row flex-lg-row justify-content-sm-center">
                             <h5 class="text-secondary" id="allListTotal">Total <span class="text-dark" id="allListTotalNumber">{{ listNotes|length }}</span></h5>
                             <h5 class="text-secondary d-none" id="starListTotal">Total <span class="text-dark" id="starListTotalNumber">{{ starListNotes|length }}</span></h5>
                             <h5 class="text-secondary d-none" id="notStarListTotal">Total <span class="text-dark" id="notStarListTotalNumber">{{ notStarListNotes|length }}</span></h5>
@@ -54,8 +54,8 @@
                     <!-- All Notes List -->
                     <div id="allNotesDiv">
                         {% for each in listNotes reversed %}
-                        <div class="d-flex flex-row bg-light px-3 my-2" style="border-left: 5px solid rgba(0, 0, 0, 0.479);">
-                            <div style="border-right: 3px solid white;" class="pr-3 py-3 d-flex flex-column justify-content-around">
+                        <div class="d-flex flex-sm-row flex-column bg-light px-3 my-2" style="border-left: 5px solid rgba(0, 0, 0, 0.479);">
+                            <div style="border-right: 3px solid white;" class="pr-3 py-3 d-flex flex-row flex-md-column flex-lg-column justify-content-around">
                                 <span class="text-center">{{each.noteCreationTime}}</span>
                                 <span class="text-center">{{each.noteCreationDate}}</span>
                                 {% if each.noteStar is False %}
@@ -66,9 +66,9 @@
                                 <button class="ri-mail-volume-line ri-lg btn" onclick="removeStar(this)" value="{{each.id}}"></button>
                             </div>
                             <div class="p-3 col-11">
-                                <div id="textareaDiv">
+                                <div id="textareaDiv1">
                                     <textarea 
-                                        style="min-height: 60px !important;
+                                        style="
                                         {% if each.noteUnderline is True %}
                                             {% if each.noteStrikeThrough is True %}
                                                 text-decoration: underline line-through;
@@ -83,7 +83,7 @@
                                             {% if each.noteBold is True %}font-weight-bold{% endif %}
                                             {% if each.noteItalic is True %}font-italic{% endif %}
                                         "
-                                        id="fromAllUpdateNote{{each.id}}">{{each.noteValue}}</textarea>
+                                        id="fromAllUpdateNote{{each.id}}" onclick="textareaMax(this)">{{each.noteValue}}</textarea>
                                 </div>
                                 <div class="d-flex flex-row justify-content-between pt-2">
                                     <div>
@@ -112,6 +112,8 @@
                                         {% endif %}{% if each.noteBackgroundColor is not Null %}
                                             <button class="ri-paint-brush-line ri-lg btn bg-secondary text-white" onclick="disableBackgroundColor(this)" data-id="{{each.id}}"></button>
                                         {% endif %}
+                                        <button class="ri-sort-asc ri-lg btn" onclick="minimizeTextarea1(this)" value="{{each.id}}" data-min1="{{each.id}}"></button>
+                                        <button class="ri-sort-desc ri-lg btn bg-secondary text-white d-none" onclick="maximizeTextarea1(this)" value="{{each.id}}" data-max1="{{each.id}}"></button>
                                     </div>
                                     <div>
                                         <button class="btn btn-success" onclick="noteUpdate1(this)" value="{{each.id}}">Update</button>
@@ -138,7 +140,7 @@
                                 <button class="ri-mail-volume-line ri-lg btn" onclick="removeStar(this)" value="{{star.id}}"></button>
                             </div>
                             <div class="p-3 col-11">
-                                <div id="textareaDiv">
+                                <div id="textareaDiv2">
                                     <textarea 
                                         style="min-height: 60px !important;
                                         {% if star.noteUnderline is True %}
@@ -155,7 +157,7 @@
                                             {% if star.noteBold is True %}font-weight-bold{% endif %}
                                             {% if star.noteItalic is True %}font-italic{% endif %}
                                         "
-                                        id="fromStarUpdateNote{{star.id}}">{{star.noteValue}}</textarea>
+                                        id="fromStarUpdateNote{{star.id}}" onclick="textareaMax(this)">{{star.noteValue}}</textarea>
                                 </div>
                                 <div class="d-flex flex-row justify-content-between pt-2">
                                     <div>
@@ -176,14 +178,16 @@
                                         {% endif %}{% if star.noteStrikeThrough is False %}
                                             <button class="ri-strikethrough ri-lg btn" onclick="enableStrikeThrough(this)" value="{{star.id}}"></button>
                                         {% endif %}{% if star.noteTextColor is Null %}
-                                            <button class="ri-brush-line ri-lg btn" onclick="disableTextColor(this)" value="{{star.id}}"></button>
+                                            <button class="ri-brush-line ri-lg btn" onclick="enableTextColor(this)" value="{{star.id}}"></button>
                                         {% endif %}{% if star.noteTextColor is not Null %}
-                                            <button class="ri-brush-line ri-lg btn bg-secondary text-white" onclick="enableTextColor(this)" value="{{star.id}}"></button>
+                                            <button class="ri-brush-line ri-lg btn bg-secondary text-white" onclick="disableTextColor(this)" value="{{star.id}}"></button>
                                         {% endif %}{% if star.noteBackgroundColor is Null %}
-                                            <button class="ri-paint-brush-line ri-lg btn" onclick="disableBackgroundColor(this)" value="{{star.id}}"></button>
+                                            <button class="ri-paint-brush-line ri-lg btn" onclick="enableBackgroundColor(this)" value="{{star.id}}"></button>
                                         {% endif %}{% if star.noteBackgroundColor is not Null %}
-                                            <button class="ri-paint-brush-line ri-lg btn bg-secondary text-white" onclick="enableBackgroundColor(this)" value="{{star.id}}"></button>
+                                            <button class="ri-paint-brush-line ri-lg btn bg-secondary text-white" onclick="disableBackgroundColor(this)" value="{{star.id}}"></button>
                                         {% endif %}
+                                        <button class="ri-sort-asc ri-lg btn" onclick="minimizeTextarea2(this)" value="{{star.id}}" data-min1="{{star.id}}"></button>
+                                        <button class="ri-sort-desc ri-lg btn bg-secondary text-white d-none" onclick="maximizeTextarea2(this)" value="{{star.id}}" data-max1="{{star.id}}"></button>
                                     </div>
                                     <div>
                                         <button class="btn btn-success" onclick="noteUpdate2(this)" value="{{star.id}}">Update</button>
@@ -210,7 +214,7 @@
                                 <button class="ri-mail-volume-line ri-lg btn" onclick="removeStar(this)" value="{{each.id}}"></button>
                             </div>
                             <div class="p-3 col-11">
-                                <div id="textareaDiv">
+                                <div id="textareaDiv3">
                                     <textarea 
                                         style="min-height: 60px !important;
                                         {% if notstar.noteUnderline is True %}
@@ -227,7 +231,7 @@
                                             {% if notstar.noteBold is True %}font-weight-bold{% endif %}
                                             {% if notstar.noteItalic is True %}font-italic{% endif %}
                                         "
-                                        id="froNotStarUpdateNote{{star.id}}">{{notstar.noteValue}}</textarea>
+                                        id="fromNotStarUpdateNote{{notstar.id}}" onclick="textareaMax(this)">{{notstar.noteValue}}</textarea>
                                 </div>
                                 <div class="d-flex flex-row justify-content-between pt-2">
                                     <div>
@@ -256,6 +260,8 @@
                                         {% endif %}{% if notstar.noteBackgroundColor is not Null %}
                                             <button class="ri-paint-brush-line ri-lg btn bg-secondary text-white" onclick="enableBackgroundColor(this)" value="{{notstar.id}}"></button>
                                         {% endif %}
+                                        <button class="ri-sort-asc ri-lg btn" onclick="minimizeTextarea3(this)" value="{{notstar.id}}" data-min1="{{notstar.id}}"></button>
+                                        <button class="ri-sort-desc ri-lg btn bg-secondary text-white d-none" onclick="maximizeTextarea3(this)" value="{{notstar.id}}" data-max1="{{notstar.id}}"></button>
                                     </div>
                                     <div>
                                         <button class="btn btn-success" onclick="noteUpdate3(this)" value="{{notstar.id}}">Update</button>
@@ -271,19 +277,6 @@
         </div>
     </section>
 </body>
-<div class="card bg-color">
-    <div class="card-body text-center d-flex justify-content-center align-items-center flex-column">
-      <p>My background color will be changed</p>
-      <button id="color-picker-3" class="btn btn-outline-primary btn-sm">Color Picker</button>
-    </div>
-  </div>
-  
-  <div class="card">
-    <div class="card-body text-center d-flex justify-content-center align-items-center flex-column">
-      <p class="text-color">My text color will be changed</p>
-      <button id="color-picker-4" class="btn btn-outline-primary btn-sm">Color Picker</button>
-    </div>
-  </div>
 <script>
     // Notes Filters Buttons
     // Star Notes View Button
@@ -294,6 +287,7 @@
         $("#allNotesDiv").removeClass('d-none');
         $("#starNotesDiv").addClass('d-none');
         $("#notStarNotesDiv").addClass('d-none');
+        $('#textareaDiv1>textarea').autoHeight();
     });
     // Star Notes View Button
     $("#starNotesButton").click(function(){
@@ -303,6 +297,7 @@
         $("#allNotesDiv").addClass('d-none');
         $("#starNotesDiv").removeClass('d-none');
         $("#notStarNotesDiv").addClass('d-none');
+        $('#textareaDiv2>textarea').autoHeight();
     });
     // Star Notes View Button
     $("#notStarNotesButton").click(function(){
@@ -312,6 +307,7 @@
         $("#allNotesDiv").addClass('d-none');
         $("#starNotesDiv").addClass('d-none');
         $("#notStarNotesDiv").removeClass('d-none');
+        $('#textareaDiv3>textarea').autoHeight();
     });
 
     // Reset Note
@@ -525,6 +521,19 @@
           },
         });
     }
+    // Minimize text area
+    function minimizeTextarea1(e){
+        $('[data-min1='+e.value+']').addClass('d-none');
+        $('[data-max1='+e.value+']').removeClass('d-none');
+        $('#fromAllUpdateNote'+e.value).attr("style", "");
+        $('#fromAllUpdateNote'+e.value).css({'height': '60px', 'overflow-y': 'scroll'});
+    }    
+    // Maximize text area
+    function maximizeTextarea1(e){
+        $('[data-min1='+e.value+']').removeClass('d-none');
+        $('[data-max1='+e.value+']').addClass('d-none');
+        $('#fromAllUpdateNote'+e.value).autoHeight();
+    }
 
     // Add Note
     function addNote(){
@@ -559,6 +568,7 @@
             $('#allNotesDiv').load(' #allNotesDiv > *');
             $('#starNotesDiv').load(' #starNotesDiv > *');
             $('#notStarNotesDiv').load(' #notStarNotesDiv > *');
+            $(e).autoHeight();
           },
         });
     }
@@ -575,6 +585,7 @@
             $('#allNotesDiv').load(' #allNotesDiv > *');
             $('#starNotesDiv').load(' #starNotesDiv > *');
             $('#notStarNotesDiv').load(' #notStarNotesDiv > *');
+            $(e).autoHeight();
           },
         });
     }
@@ -583,7 +594,7 @@
           type:'POST',
           url:'{% url "todoList:noteUpdate" %}',
           data:{
-              noteValue: $('#fromNonStarUpdateNote'+e.value).val(),
+              noteValue: $('#fromNotStarUpdateNote'+e.value).val(),
               noteID: e.value,
               csrfmiddlewaretoken: '{{ csrf_token }}'
           },
@@ -591,6 +602,7 @@
             $('#allNotesDiv').load(' #allNotesDiv > *');
             $('#starNotesDiv').load(' #starNotesDiv > *');
             $('#notStarNotesDiv').load(' #notStarNotesDiv > *');
+            $(e).autoHeight();
           },
         });
     }
@@ -612,6 +624,7 @@
         });
     }
 
+    
     jQuery.fn.extend({
       autoHeight: function () {
         function autoHeight_(element) {
@@ -627,8 +640,15 @@
         });
       }
     });
-    $('#inputValue').autoHeight();
-    $('#textareaDiv>textarea').autoHeight();
+    $(document).ready(function (){
+        $('#inputValue').autoHeight();
+        $('#textareaDiv1>textarea').autoHeight();
+        $('#textareaDiv2>textarea').autoHeight();
+        $('#textareaDiv3>textarea').autoHeight();
+    });
+    function textareaMax(e){
+        $(e).autoHeight();
+    };
 
     $('#color-picker').spectrum({
         type: "color",
