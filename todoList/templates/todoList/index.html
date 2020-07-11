@@ -10,6 +10,8 @@
     <!-- BOOTSTRAP CDN -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons">
     <link rel="stylesheet" href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css" integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX" crossorigin="anonymous"><link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
     <script src="https://unpkg.com/popper.js@1.12.6/dist/umd/popper.js" integrity="sha384-fA23ZRQ3G/J53mElWqVJEGJzU0sTs+SvzG8fXVWP+kJQ1lwFAOkcUOysnlKJC33U" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js" integrity="sha384-CauSuKpEqAFajSpkdjv3z9t8E7RlpJ1UP0lKM/+NdtSarroVKu069AlsRPKkFBz9" crossorigin="anonymous"></script>
@@ -61,11 +63,11 @@
                                 <span class="text-center">{{each.noteCreationTime}}</span>
                                 <span class="text-center">{{each.noteCreationDate}}</span>
                                 {% if each.noteStar is False %}
-                                    <button class="ri-star-line ri-lg btn" onclick="markStar(this)" value="{{each.id}}"></button>
+                                    <button class="ri-star-line ri-lg btn" onclick="markStar(this)" value="{{each.id}}" data-toggle="tooltip" data-html="true" title="Add Star"></button>
                                 {% else %}
-                                    <button class="ri-star-fill ri-lg btn" onclick="removeStar(this)" value="{{each.id}}"></button>
+                                    <button class="ri-star-fill ri-lg btn" onclick="removeStar(this)" value="{{each.id}}" data-toggle="tooltip" data-html="true" title="Remove Star"></button>
                                 {% endif %}
-                                <button class="ri-mail-volume-line ri-lg btn" onclick="removeStar(this)" value="{{each.id}}"></button>
+                                <button class="ri-mail-volume-line ri-lg btn" onclick="removeStar(this)" value="{{each.id}}" data-toggle="tooltip" data-html="true" title="Email Reminder"></button>
                             </div>
                             <div 
                                 style="background-color: {{each.noteBackgroundColor}};"
@@ -92,33 +94,33 @@
                                 <div class="d-flex flex-row justify-content-between pt-2">
                                     <div>
                                         {% if each.noteBold is True %}
-                                            <button class="ri-bold ri-lg btn bg-secondary text-white" onclick="disableBold(this)" value="{{each.id}}"></button>
+                                            <button class="ri-bold ri-lg btn bg-secondary text-white" onclick="disableBold(this)" value="{{each.id}}" data-toggle="tooltip" data-html="true" title="Discard BOLD Effect<br>Example<br> Before: <b>This is bold</b><br>After: This is bold"></button>
                                         {% endif %}{% if each.noteBold is False %}
-                                            <button class="ri-bold ri-lg btn" onclick="enableBold(this)" value="{{each.id}}"></button>
+                                            <button class="ri-bold ri-lg btn" onclick="enableBold(this)" value="{{each.id}}" data-toggle="tooltip" data-html="true" title="Applies BOLD Effect<br>Example<br> Before: This is bold<br>After: <b>This is bold</b>"></button>
                                         {% endif %}{% if each.noteItalic is True %}
-                                            <button class="ri-italic ri-lg btn bg-secondary text-white" onclick="disableItalic(this)" value="{{each.id}}"></button>
+                                            <button class="ri-italic ri-lg btn bg-secondary text-white" onclick="disableItalic(this)" value="{{each.id}}" data-toggle="tooltip" data-html="true" title="Discard ITALIC Effect<br>Example<br> Before: <i>This is italic</i><br>After: This is italic"></button>
                                         {% endif %}{% if each.noteItalic is False %}
-                                            <button class="ri-italic ri-lg btn" onclick="enableItalic(this)" value="{{each.id}}"></button>
+                                            <button class="ri-italic ri-lg btn" onclick="enableItalic(this)" value="{{each.id}}" data-toggle="tooltip" data-html="true" title="Applies ITALIC Effect<br>Example<br> Before: This is italic<br>After: <i>This is italic</i>"></button>
                                         {% endif %}{% if each.noteUnderline is True %}
-                                            <button class="ri-underline ri-lg btn bg-secondary text-white" onclick="disableUnderline(this)" value="{{each.id}}"></button>
+                                            <button class="ri-underline ri-lg btn bg-secondary text-white" onclick="disableUnderline(this)" value="{{each.id}}" data-toggle="tooltip" data-html="true" title="Discard UNDERLINE Effect<br>Example<br> Before: <u>This is underline</u><br>After: This is underline"></button>
                                         {% endif %}{% if each.noteUnderline is False %}
-                                            <button class="ri-underline ri-lg btn" onclick="enableUnderline(this)" value="{{each.id}}"></button>
+                                            <button class="ri-underline ri-lg btn" onclick="enableUnderline(this)" value="{{each.id}}" data-toggle="tooltip" data-html="true" title="Applies UNDERLINE Effect<br>Example<br> Before: This is underline<br>After: <u>This is underline</u>"></button>
                                         {% endif %}{% if each.noteStrikeThrough is True %}
-                                            <button class="ri-strikethrough ri-lg btn bg-secondary text-white" onclick="disableStrikeThrough(this)" value="{{each.id}}"></button>
+                                            <button class="ri-strikethrough ri-lg btn bg-secondary text-white" onclick="disableStrikeThrough(this)" value="{{each.id}}" data-toggle="tooltip" data-html="true" title="Discard STRIKE Effect<br>Example<br> Before: <strike>This is strike</strike><br>After: This is strike"></button>
                                         {% endif %}{% if each.noteStrikeThrough is False %}
-                                            <button class="ri-strikethrough ri-lg btn" onclick="enableStrikeThrough(this)" value="{{each.id}}"></button>
+                                            <button class="ri-strikethrough ri-lg btn" onclick="enableStrikeThrough(this)" value="{{each.id}}" data-toggle="tooltip" data-html="true" title="Applies STRIKE Effect<br>Example<br> Before: This is strike<br>After: <strike>This is strike</strike>"></button>
                                         {% endif %}{% if each.noteTextColor == 'black' %}
-                                            <button class="ri-brush-line ri-lg btn" onclick="enableTextColor(this)" value="{{each.id}}"></button>
+                                            <button class="ri-brush-line ri-lg btn" onclick="enableTextColor(this)" value="{{each.id}}" data-toggle="tooltip" data-html="true" title="Change Text Color"></button>
                                         {% endif %}{% if each.noteTextColor != 'black' %}
-                                            <button class="ri-brush-line ri-lg btn bg-secondary text-white" onclick="disableTextColor(this)" value="{{each.id}}"></button>
+                                            <button class="ri-brush-line ri-lg btn bg-secondary text-white" onclick="disableTextColor(this)" value="{{each.id}}" data-toggle="tooltip" data-html="true" title="Change Text Color"></button>
                                         {% endif %}{% if each.noteBackgroundColor == 'transparent' %}
-                                            <input type="color" class="ri-paint-brush-line ri-lg btn" name="bgcolor1" pattern="^#+([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$" data-bgcolor1="{{each.id}}" id="bgcolorpicker1" value="#f5f5f5"></input>
+                                            <input type="color" class="ri-paint-brush-line ri-lg btn" name="bgcolor1" pattern="^#+([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$" data-bgcolor1="{{each.id}}" id="bgcolorpicker1" value="#f5f5f5" data-toggle="tooltip" data-html="true" title="Change Background Color"></input>
                                         {% endif %}{% if each.noteBackgroundColor != 'transparent' %}
-                                            <button type="color" class="ri-paint-brush-line ri-lg btn bg-secondary text-white" onclick="disableBackgroundColor(this)" data-id="{{each.id}}"></button>
+                                            <button type="color" class="ri-paint-brush-line ri-lg btn bg-secondary text-white" onclick="disableBackgroundColor(this)" data-id="{{each.id}}" data-toggle="tooltip" data-html="true" title="Remove Background Color"></button>
                                         {% endif %}
                                         <input type="hidden" pattern="^#+([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$" value="#f5f5f5" id="bghexcolor1"></input>
-                                        <button class="ri-sort-asc ri-lg btn" onclick="minimizeTextarea1(this)" value="{{each.id}}" data-min1="{{each.id}}"></button>
-                                        <button class="ri-sort-desc ri-lg btn bg-secondary text-white d-none" onclick="maximizeTextarea1(this)" value="{{each.id}}" data-max1="{{each.id}}"></button>
+                                        <button class="ri-sort-asc ri-lg btn" onclick="minimizeTextarea1(this)" value="{{each.id}}" data-min1="{{each.id}}" data-toggle="tooltip" data-html="true" title="Minimize Text Area"></button>
+                                        <button class="ri-sort-desc ri-lg btn bg-secondary text-white d-none" onclick="maximizeTextarea1(this)" value="{{each.id}}" data-max1="{{each.id}}" data-toggle="tooltip" data-html="true" title="Expand Textarea"></button>
                                     </div>
                                     <div>
                                         <button class="btn btn-success" onclick="noteUpdate1(this)" value="{{each.id}}">Update</button>
@@ -143,11 +145,11 @@
                                 <span class="text-center">{{star.noteCreationTime}}</span>
                                 <span class="text-center">{{star.noteCreationDate}}</span>
                                 {% if star.noteStar is False %}
-                                    <button class="ri-star-line ri-lg btn" onclick="markStar(this)" value="{{star.id}}"></button>
+                                    <button class="ri-star-line ri-lg btn" onclick="markStar(this)" value="{{star.id}}" data-toggle="tooltip" data-html="true" title="Add Star"></button>
                                 {% else %}
-                                    <button class="ri-star-fill ri-lg btn" onclick="removeStar(this)" value="{{star.id}}"></button>
+                                    <button class="ri-star-fill ri-lg btn" onclick="removeStar(this)" value="{{star.id}}" data-toggle="tooltip" data-html="true" title="Remove Star"></button>
                                 {% endif %}
-                                <button class="ri-mail-volume-line ri-lg btn" onclick="removeStar(this)" value="{{star.id}}"></button>
+                                <button class="ri-mail-volume-line ri-lg btn" onclick="removeStar(this)" value="{{star.id}}" data-toggle="tooltip" data-html="true" title="Email Reminder"></button>
                             </div>
                             <div 
                                 style="background-color: {{star.noteBackgroundColor}};"
@@ -174,33 +176,33 @@
                                 <div class="d-flex flex-row justify-content-between pt-2">
                                     <div>
                                         {% if star.noteBold is True %}
-                                            <button class="ri-bold ri-lg btn bg-secondary text-white" onclick="disableBold(this)" value="{{star.id}}"></button>
+                                            <button class="ri-bold ri-lg btn bg-secondary text-white" onclick="disableBold(this)" value="{{star.id}}" data-toggle="tooltip" data-html="true" title="Discard BOLD Effect<br>Example<br> Before: <b>This is bold</b><br>After: This is bold"></button>
                                         {% endif %}{% if star.noteBold is False %}
-                                            <button class="ri-bold ri-lg btn" onclick="enableBold(this)" value="{{star.id}}"></button>
+                                            <button class="ri-bold ri-lg btn" onclick="enableBold(this)" value="{{star.id}}" data-toggle="tooltip" data-html="true" title="Applies BOLD Effect<br>Example<br> Before: This is bold<br>After: <b>This is bold</b>"></button>
                                         {% endif %}{% if star.noteItalic is True %}
-                                            <button class="ri-italic ri-lg btn bg-secondary text-white" onclick="disableItalic(this)" value="{{star.id}}"></button>
+                                            <button class="ri-italic ri-lg btn bg-secondary text-white" onclick="disableItalic(this)" value="{{star.id}}" data-toggle="tooltip" data-html="true" title="Discard ITALIC Effect<br>Example<br> Before: <i>This is italic</i><br>After: This is italic"></button>
                                         {% endif %}{% if star.noteItalic is False %}
-                                            <button class="ri-italic ri-lg btn" onclick="enableItalic(this)" value="{{star.id}}"></button>
+                                            <button class="ri-italic ri-lg btn" onclick="enableItalic(this)" value="{{star.id}}" data-toggle="tooltip" data-html="true" title="Applies ITALIC Effect<br>Example<br> Before: This is italic<br>After: <i>This is italic</i>"></button>
                                         {% endif %}{% if star.noteUnderline is True %}
-                                            <button class="ri-underline ri-lg btn bg-secondary text-white" onclick="disableUnderline(this)" value="{{star.id}}"></button>
+                                            <button class="ri-underline ri-lg btn bg-secondary text-white" onclick="disableUnderline(this)" value="{{star.id}}" data-toggle="tooltip" data-html="true" title="Discard UNDERLINE Effect<br>Example<br> Before: <u>This is underline</u><br>After: This is underline"></button>
                                         {% endif %}{% if star.noteUnderline is False %}
-                                            <button class="ri-underline ri-lg btn" onclick="enableUnderline(this)" value="{{star.id}}"></button>
+                                            <button class="ri-underline ri-lg btn" onclick="enableUnderline(this)" value="{{star.id}}" data-toggle="tooltip" data-html="true" title="Applies UNDERLINE Effect<br>Example<br> Before: This is underline<br>After: <u>This is underline</u>"></button>
                                         {% endif %}{% if star.noteStrikeThrough is True %}
-                                            <button class="ri-strikethrough ri-lg btn bg-secondary text-white" onclick="disableStrikeThrough(this)" value="{{star.id}}"></button>
+                                            <button class="ri-strikethrough ri-lg btn bg-secondary text-white" onclick="disableStrikeThrough(this)" value="{{star.id}}" data-toggle="tooltip" data-html="true" title="Discard STRIKE Effect<br>Example<br> Before: <strike>This is strike</strike><br>After: This is strike"></button>
                                         {% endif %}{% if star.noteStrikeThrough is False %}
-                                            <button class="ri-strikethrough ri-lg btn" onclick="enableStrikeThrough(this)" value="{{star.id}}"></button>
+                                            <button class="ri-strikethrough ri-lg btn" onclick="enableStrikeThrough(this)" value="{{star.id}}" data-toggle="tooltip" data-html="true" title="Applies STRIKE Effect<br>Example<br> Before: This is strike<br>After: <strike>This is strike</strike>"></button>
                                         {% endif %}{% if star.noteTextColor == 'black' %}
-                                            <button class="ri-brush-line ri-lg btn" onclick="enableTextColor(this)" value="{{star.id}}"></button>
+                                            <button class="ri-brush-line ri-lg btn" onclick="enableTextColor(this)" value="{{star.id}}" data-toggle="tooltip" data-html="true" title="Change Text Color"></button>
                                         {% endif %}{% if star.noteTextColor != 'black' %}
-                                            <button class="ri-brush-line ri-lg btn bg-secondary text-white" onclick="disableTextColor(this)" value="{{star.id}}"></button>
+                                            <button class="ri-brush-line ri-lg btn bg-secondary text-white" onclick="disableTextColor(this)" value="{{star.id}}" data-toggle="tooltip" data-html="true" title="Change Text Color"></button>
                                         {% endif %}{% if star.noteBackgroundColor == 'transparent' %}
-                                            <input type="color" class="ri-paint-brush-line ri-lg btn" name="bgcolor2" pattern="^#+([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$" data-bgcolor2="{{star.id}}" id="bgcolorpicker2" value="#f5f5f5"></input>
+                                            <input type="color" class="ri-paint-brush-line ri-lg btn" name="bgcolor2" pattern="^#+([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$" data-bgcolor2="{{star.id}}" id="bgcolorpicker2" value="#f5f5f5" data-toggle="tooltip" data-html="true" title="Change Background Color"></input>
                                         {% endif %}{% if star.noteBackgroundColor != 'transparent' %}
-                                            <button type="color" class="ri-paint-brush-line ri-lg btn bg-secondary text-white" onclick="disableBackgroundColor(this)" data-id="{{star.id}}"></button>
+                                            <button type="color" class="ri-paint-brush-line ri-lg btn bg-secondary text-white" onclick="disableBackgroundColor(this)" data-id="{{star.id}}" data-toggle="tooltip" data-html="true" title="Remove Background Color"></button>
                                         {% endif %}
                                         <input type="hidden" pattern="^#+([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$" value="#f5f5f5" id="bghexcolor2"></input>
-                                        <button class="ri-sort-asc ri-lg btn" onclick="minimizeTextarea2(this)" value="{{star.id}}" data-min1="{{star.id}}"></button>
-                                        <button class="ri-sort-desc ri-lg btn bg-secondary text-white d-none" onclick="maximizeTextarea2(this)" value="{{star.id}}" data-max1="{{star.id}}"></button>
+                                        <button class="ri-sort-asc ri-lg btn" onclick="minimizeTextarea2(this)" value="{{star.id}}" data-min1="{{star.id}}" data-toggle="tooltip" data-html="true" title="Minimize Text Area"></button>
+                                        <button class="ri-sort-desc ri-lg btn bg-secondary text-white d-none" onclick="maximizeTextarea2(this)" value="{{star.id}}" data-max1="{{star.id}}" data-toggle="tooltip" data-html="true" title="Expand Textarea"></button>
                                     </div>
                                     <div>
                                         <button class="btn btn-success" onclick="noteUpdate2(this)" value="{{star.id}}">Update</button>
@@ -225,11 +227,11 @@
                                 <span class="text-center">{{notstar.noteCreationTime}}</span>
                                 <span class="text-center">{{notstar.noteCreationDate}}</span>
                                 {% if notstar.noteStar is False %}
-                                    <button class="ri-star-line ri-lg btn" onclick="markStar(this)" value="{{notstar.id}}"></button>
+                                    <button class="ri-star-line ri-lg btn" onclick="markStar(this)" value="{{notstar.id}}" data-toggle="tooltip" data-html="true" title="Add Star"></button>
                                 {% else %}
-                                    <button class="ri-star-fill ri-lg btn" onclick="removeStar(this)" value="{{notstar.id}}"></button>
+                                    <button class="ri-star-fill ri-lg btn" onclick="removeStar(this)" value="{{notstar.id}}" data-toggle="tooltip" data-html="true" title="Remove Star"></button>
                                 {% endif %}
-                                <button class="ri-mail-volume-line ri-lg btn" onclick="removeStar(this)" value="{{each.id}}"></button>
+                                <button class="ri-mail-volume-line ri-lg btn" onclick="removeStar(this)" value="{{notstar.id}}" data-toggle="tooltip" data-html="true" title="Email Reminder"></button>
                             </div>
                             <div 
                                 style="background-color: {{notstar.noteBackgroundColor}};"
@@ -256,33 +258,33 @@
                                 <div class="d-flex flex-row justify-content-between pt-2">
                                     <div>
                                         {% if notstar.noteBold is True %}
-                                            <button class="ri-bold ri-lg btn bg-secondary text-white" onclick="disableBold(this)" value="{{notstar.id}}"></button>
+                                            <button class="ri-bold ri-lg btn bg-secondary text-white" onclick="disableBold(this)" value="{{notstar.id}}" data-toggle="tooltip" data-html="true" title="Discard BOLD Effect<br>Example<br> Before: <b>This is bold</b><br>After: This is bold"></button>
                                         {% endif %}{% if notstar.noteBold is False %}
-                                            <button class="ri-bold ri-lg btn" onclick="enableBold(this)" value="{{notstar.id}}"></button>
+                                            <button class="ri-bold ri-lg btn" onclick="enableBold(this)" value="{{notstar.id}}" data-toggle="tooltip" data-html="true" title="Applies BOLD Effect<br>Example<br> Before: This is bold<br>After: <b>This is bold</b>"></button>
                                         {% endif %}{% if notstar.noteItalic is True %}
-                                            <button class="ri-italic ri-lg btn bg-secondary text-white" onclick="disableItalic(this)" value="{{notstar.id}}"></button>
+                                            <button class="ri-italic ri-lg btn bg-secondary text-white" onclick="disableItalic(this)" value="{{notstar.id}}" data-toggle="tooltip" data-html="true" title="Discard ITALIC Effect<br>Example<br> Before: <i>This is italic</i><br>After: This is italic"></button>
                                         {% endif %}{% if notstar.noteItalic is False %}
-                                            <button class="ri-italic ri-lg btn" onclick="enableItalic(this)" value="{{notstar.id}}"></button>
+                                            <button class="ri-italic ri-lg btn" onclick="enableItalic(this)" value="{{notstar.id}}" data-toggle="tooltip" data-html="true" title="Applies ITALIC Effect<br>Example<br> Before: This is italic<br>After: <i>This is italic</i>"></button>
                                         {% endif %}{% if notstar.noteUnderline is True %}
-                                            <button class="ri-underline ri-lg btn bg-secondary text-white" onclick="disableUnderline(this)" value="{{notstar.id}}"></button>
+                                            <button class="ri-underline ri-lg btn bg-secondary text-white" onclick="disableUnderline(this)" value="{{notstar.id}}" data-toggle="tooltip" data-html="true" title="Discard UNDERLINE Effect<br>Example<br> Before: <u>This is underline</u><br>After: This is underline"></button>
                                         {% endif %}{% if notstar.noteUnderline is False %}
-                                            <button class="ri-underline ri-lg btn" onclick="enableUnderline(this)" value="{{notstar.id}}"></button>
+                                            <button class="ri-underline ri-lg btn" onclick="enableUnderline(this)" value="{{notstar.id}}" data-toggle="tooltip" data-html="true" title="Applies UNDERLINE Effect<br>Example<br> Before: This is underline<br>After: <u>This is underline</u>"></button>
                                         {% endif %}{% if notstar.noteStrikeThrough is True %}
-                                            <button class="ri-strikethrough ri-lg btn bg-secondary text-white" onclick="disableStrikeThrough(this)" value="{{notstar.id}}"></button>
+                                            <button class="ri-strikethrough ri-lg btn bg-secondary text-white" onclick="disableStrikeThrough(this)" value="{{notstar.id}}" data-toggle="tooltip" data-html="true" title="Discard STRIKE Effect<br>Example<br> Before: <strike>This is strike</strike><br>After: This is strike"></button>
                                         {% endif %}{% if notstar.noteStrikeThrough is False %}
-                                            <button class="ri-strikethrough ri-lg btn" onclick="enableStrikeThrough(this)" value="{{notstar.id}}"></button>
+                                            <button class="ri-strikethrough ri-lg btn" onclick="enableStrikeThrough(this)" value="{{notstar.id}}" data-toggle="tooltip" data-html="true" title="Applies STRIKE Effect<br>Example<br> Before: This is strike<br>After: <strike>This is strike</strike>"></button>
                                         {% endif %}{% if notstar.noteTextColor == 'black' %}
-                                            <button class="ri-brush-line ri-lg btn" onclick="disableTextColor(this)" value="{{notstar.id}}"></button>
+                                            <button class="ri-brush-line ri-lg btn" onclick="disableTextColor(this)" value="{{notstar.id}}" data-toggle="tooltip" data-html="true" title="Change Text Color"></button>
                                         {% endif %}{% if notstar.noteTextColor != 'black' %}
-                                            <button class="ri-brush-line ri-lg btn bg-secondary text-white" onclick="enableTextColor(this)" value="{{notstar.id}}"></button>
+                                            <button class="ri-brush-line ri-lg btn bg-secondary text-white" onclick="enableTextColor(this)" value="{{notstar.id}}" data-toggle="tooltip" data-html="true" title="Change Text Color"></button>
                                         {% endif %}{% if notstar.noteBackgroundColor == 'transparent' %}
-                                            <input type="color" class="ri-paint-brush-line ri-lg btn" name="bgcolor3" pattern="^#+([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$" data-bgcolor3="{{notstar.id}}" id="bgcolorpicker3" value="#f5f5f5"></input>
+                                            <input type="color" class="ri-paint-brush-line ri-lg btn" name="bgcolor3" pattern="^#+([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$" data-bgcolor3="{{notstar.id}}" id="bgcolorpicker3" value="#f5f5f5" data-toggle="tooltip" data-html="true" title="Change Background Color"></input>
                                         {% endif %}{% if notstar.noteBackgroundColor != 'transparent' %}
-                                            <button class="ri-paint-brush-line ri-lg btn bg-secondary text-white" onclick="disableBackgroundColor(this)" data-id="{{notstar.id}}"></button>
+                                            <button class="ri-paint-brush-line ri-lg btn bg-secondary text-white" onclick="disableBackgroundColor(this)" data-id="{{notstar.id}}" data-toggle="tooltip" data-html="true" title="Remove Background Color"></button>
                                         {% endif %}
                                         <input type="hidden" pattern="^#+([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$" value="#f5f5f5" id="bghexcolor3"></input>
-                                        <button class="ri-sort-asc ri-lg btn" onclick="minimizeTextarea3(this)" value="{{notstar.id}}" data-min1="{{notstar.id}}"></button>
-                                        <button class="ri-sort-desc ri-lg btn bg-secondary text-white d-none" onclick="maximizeTextarea3(this)" value="{{notstar.id}}" data-max1="{{notstar.id}}"></button>
+                                        <button class="ri-sort-asc ri-lg btn" onclick="minimizeTextarea3(this)" value="{{notstar.id}}" data-min1="{{notstar.id}}" data-toggle="tooltip" data-html="true" title="Minimize Text Area"></button>
+                                        <button class="ri-sort-desc ri-lg btn bg-secondary text-white d-none" onclick="maximizeTextarea3(this)" value="{{notstar.id}}" data-max1="{{notstar.id}}" data-toggle="tooltip" data-html="true" title="Expand Textarea"></button>
                                     </div>
                                     <div>
                                         <button class="btn btn-success" onclick="noteUpdate3(this)" value="{{notstar.id}}">Update</button>
@@ -378,6 +380,10 @@
     }
 
     // Common buttons
+    // Bootstrap Toolpit function
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
     // Bold Enable
     function enableBold(e){
         $.ajax({
@@ -691,5 +697,6 @@
     $('#bghexcolor3').on('change', function() {
       $('#bgcolorpicker3').val(this.value);
     });
+
 </script>
 </html>
